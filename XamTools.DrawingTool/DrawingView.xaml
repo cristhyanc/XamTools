@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:tt="clr-namespace:XamTools.DrawingTool.SkiaSharpExtention.TouchTracking"
+             x:Class="XamTools.DrawingTool.DrawingView">
+    <ContentView.Content>
+
+        <Grid BackgroundColor="White">
+            <skia:SKCanvasView x:Name="canvasView"
+                           PaintSurface="OnCanvasViewPaintSurface" />
+            <Grid.Effects>
+                <tt:TouchEffect Capture="True"
+                            TouchAction="OnTouchEffectAction" />
+            </Grid.Effects>
+            <Button HorizontalOptions="Center" Clicked="Button_Clicked_1"  VerticalOptions="End" Text="Arrow"></Button>
+        </Grid>
+
+    </ContentView.Content>
+</ContentView>
