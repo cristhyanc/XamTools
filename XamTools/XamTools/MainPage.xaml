@@ -3,11 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:XamTools"
              xmlns:paintTool="clr-namespace:XamTools.DrawingTool;assembly=XamTools.DrawingTool"
+             xmlns:autoControl="clr-namespace:XamTools.AutoComplete;assembly=XamTools.AutoComplete"
              x:Class="XamTools.MainPage">
 
     <StackLayout>
-        <paintTool:DrawingView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></paintTool:DrawingView>
-        
+        <!--<paintTool:DrawingView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></paintTool:DrawingView>-->
+        <autoControl:AutoCompleteControl  SelectedItem="{Binding PersonSelected, Mode=TwoWay}" SearchBoxBackgroundColor="LightGray"  PlaceHolderColor="LightGray" 
+                                          TextColor="Red" DisplayMember="FullName"
+                                          ListSource="{Binding ListPerson, Mode=TwoWay}"   >
+            
+        </autoControl:AutoCompleteControl>
+
+        <!--<autoControl:AutoCompleteControl   >
+
+        </autoControl:AutoCompleteControl>-->
+
     </StackLayout>
 
 </ContentPage>

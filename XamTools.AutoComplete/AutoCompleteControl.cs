@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace XamTools.AutoComplete
 {
-    class AutoCompleteControl : ContentView
+  public  class AutoCompleteControl : ContentView
     {
 
         ListView listViewSuggestions;
@@ -21,7 +21,7 @@ namespace XamTools.AutoComplete
 
         public AutoCompleteControl()
         {
-
+           
             listViewSuggestions = new ListView();
             listViewSuggestions.ItemTemplate = GetDataTemplate();
             currentSuggestions = new ObservableCollection<object>();
@@ -52,6 +52,7 @@ namespace XamTools.AutoComplete
 
             SetListViewVisible(false);
             listViewSuggestions.ItemsSource = currentSuggestions;
+            listViewSuggestions.BackgroundColor = Color.White;
         }
 
         private void ListViewSuggestions_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -68,15 +69,23 @@ namespace XamTools.AutoComplete
 
         private DataTemplate GetDataTemplate()
         {
+           
             var personDataTemplate = new DataTemplate(() =>
             {
                 var nameLabel = new Label();
-                nameLabel.SetBinding(TextCell.TextProperty, this.DisplayMember);
-                nameLabel.TextColor = this.TextColor;
+                nameLabel.SetBinding(TextCell.TextProperty, ".");
+                nameLabel.TextColor = Color.Black;
                 nameLabel.FontFamily = this.FontFamily;
 
                 return new ViewCell { View = nameLabel };
             });
+
+            //var personDataTemplate = new DataTemplate(() => {
+            //    var cell = new TextCell();
+            //    cell.SetBinding(TextCell.TextProperty,".");
+            //    cell.TextColor = Color.Black;
+            //    return cell;
+            //});
             return personDataTemplate;
         }
 
@@ -91,7 +100,7 @@ namespace XamTools.AutoComplete
 
         public static readonly BindableProperty SuggestionListItemDataTemplateProperty = BindableProperty.Create(nameof(SuggestionListItemDataTemplate), typeof(DataTemplate), typeof(AutoCompleteControl), null, BindingMode.TwoWay, null, SuggestionListItemDataTemplateChanged);
 
-        public static readonly BindableProperty SuggestionsHeightRequestProperty = BindableProperty.Create(nameof(SuggestionListsHeightRequest), typeof(double), typeof(AutoCompleteControl), 250, BindingMode.TwoWay, null, SuggestionHeightRequestChanged);
+        public static readonly BindableProperty SuggestionsHeightRequestProperty = BindableProperty.Create(nameof(SuggestionListsHeightRequest), typeof(double), typeof(AutoCompleteControl), 250.0, BindingMode.TwoWay, null, SuggestionHeightRequestChanged);
 
         public static readonly BindableProperty ListSourceProperty = BindableProperty.Create(nameof(ListSource), typeof(IEnumerable), typeof(AutoCompleteControl), null, BindingMode.TwoWay);
 
@@ -103,9 +112,9 @@ namespace XamTools.AutoComplete
 
         public static readonly BindableProperty SearchBoxHorizontalOptionsProperty = BindableProperty.Create(nameof(SearchBoxHorizontalOption), typeof(LayoutOptions), typeof(AutoCompleteControl), LayoutOptions.FillAndExpand, BindingMode.TwoWay, null, SearchBoxHorizontalOptionsChanged);
 
-        public static readonly BindableProperty TextValueProperty = BindableProperty.Create(nameof(TextValue), typeof(string), typeof(AutoCompleteControl), string.Empty, BindingMode.TwoWay, null, TextValueChanged);
+        public static readonly BindableProperty TextValueProperty = BindableProperty.Create(nameof(TextValue), typeof(String), typeof(AutoCompleteControl), string.Empty, BindingMode.TwoWay, null, TextValueChanged);
 
-        public static readonly BindableProperty IsListOnTopProperty = BindableProperty.Create(nameof(IsListOnTop), typeof(bool), typeof(AutoCompleteControl), false, BindingMode.TwoWay);
+         public static readonly BindableProperty IsListOnTopProperty = BindableProperty.Create(nameof(IsListOnTop), typeof(Boolean), typeof(AutoCompleteControl),false, BindingMode.TwoWay);
 
         public static readonly BindableProperty SearchBoxVerticalOptionProperty = BindableProperty.Create(nameof(SearchBoxVerticalOption), typeof(LayoutOptions),
                                                                                     typeof(AutoCompleteControl), LayoutOptions.Start,
@@ -272,10 +281,16 @@ namespace XamTools.AutoComplete
         /// Gets or sets the text horizontal options.
         /// </summary>
         /// <value>The text horizontal options.</value>
-        public bool IsListOnTop
+        public Boolean IsListOnTop
         {
-            get { return (bool)GetValue(IsListOnTopProperty); }
-            set { SetValue(IsListOnTopProperty, value); }
+            get
+            {
+                return (Boolean)GetValue(IsListOnTopProperty);
+            }
+            set
+            {
+                SetValue(IsListOnTopProperty, value);
+            }
         }
 
         /// <summary>
@@ -297,6 +312,7 @@ namespace XamTools.AutoComplete
             get { return (LayoutOptions)GetValue(SearchBoxVerticalOptionProperty); }
             set { SetValue(SearchBoxVerticalOptionProperty, value); }
         }
+
         /// <summary>
         /// Places the holder changed.
         /// </summary>
