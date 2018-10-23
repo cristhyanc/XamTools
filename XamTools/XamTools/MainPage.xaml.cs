@@ -27,6 +27,14 @@ namespace XamTools
             public string Firstname { get; set; }
             public string Lastname { get; set; }
 
+            public string FullName
+            {
+                get
+                {
+                    return (Firstname + " " + Lastname);
+                }
+            }
+            
             public Guid ID { get; set; }
 
             public override string ToString()

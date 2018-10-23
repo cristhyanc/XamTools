@@ -73,19 +73,13 @@ namespace XamTools.AutoComplete
             var personDataTemplate = new DataTemplate(() =>
             {
                 var nameLabel = new Label();
-                nameLabel.SetBinding(TextCell.TextProperty, ".");
-                nameLabel.TextColor = Color.Black;
+                nameLabel.SetBinding(Label.TextProperty, this.DisplayMember);
+                nameLabel.TextColor = this.TextColor;
                 nameLabel.FontFamily = this.FontFamily;
 
                 return new ViewCell { View = nameLabel };
             });
-
-            //var personDataTemplate = new DataTemplate(() => {
-            //    var cell = new TextCell();
-            //    cell.SetBinding(TextCell.TextProperty,".");
-            //    cell.TextColor = Color.Black;
-            //    return cell;
-            //});
+                     
             return personDataTemplate;
         }
 
@@ -102,7 +96,7 @@ namespace XamTools.AutoComplete
 
         public static readonly BindableProperty SuggestionsHeightRequestProperty = BindableProperty.Create(nameof(SuggestionListsHeightRequest), typeof(double), typeof(AutoCompleteControl), 250.0, BindingMode.TwoWay, null, SuggestionHeightRequestChanged);
 
-        public static readonly BindableProperty ListSourceProperty = BindableProperty.Create(nameof(ListSource), typeof(IEnumerable), typeof(AutoCompleteControl), null, BindingMode.TwoWay);
+        public static readonly BindableProperty ListSourceProperty = BindableProperty.Create(nameof(ListSource), typeof(IEnumerable<object>), typeof(AutoCompleteControl), null, BindingMode.TwoWay);
 
         public static readonly BindableProperty SearchBoxBackgroundColorProperty = BindableProperty.Create(nameof(SearchBoxBackgroundColor), typeof(Color), typeof(AutoCompleteControl), Color.White, BindingMode.TwoWay, null, SearchBoxBackgroundColorChanged);
 
@@ -225,9 +219,9 @@ namespace XamTools.AutoComplete
         /// Gets or sets the Suggestions.
         /// </summary>
         /// <value>The Suggestions.</value>
-        public IEnumerable ListSource
+        public IEnumerable<object> ListSource
         {
-            get { return (IEnumerable)GetValue(ListSourceProperty); }
+            get { return (IEnumerable<object>)GetValue(ListSourceProperty); }
             set { SetValue(ListSourceProperty, value); }
         }
 
@@ -460,11 +454,18 @@ namespace XamTools.AutoComplete
                     Task.Run(() =>
                     {
                         var filteredSuggestions = new List<object>();
-
-                        var objList = control.ListSource.Cast<object>();
-
-                        var lastNames = objList.Where(x => x.ToString().ToLowerInvariant().Trim().Contains(cleanedNewPlaceHolderValue)).ToList();
-                        filteredSuggestions.AddRange(lastNames);
+                        if (!string.IsNullOrEmpty(control.DisplayMember))
+                        {
+                            try
+                            {
+                                var objList = control.ListSource.ToList<object>();
+                                var lastNames = objList.Where(x => x.GetType().GetProperty(control.DisplayMember).GetValue(x).ToString().ToLower().Contains(cleanedNewPlaceHolderValue)).ToList();
+                                filteredSuggestions.AddRange(lastNames);
+                            }
+                            catch (Exception)
+                            {
+                            }                            
+                        }
 
                         if (filteredSuggestions.Count > 250)
                         {

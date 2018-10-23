@@ -8,8 +8,16 @@
 
     <StackLayout>
         <!--<paintTool:DrawingView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"></paintTool:DrawingView>-->
-        <autoControl:AutoCompleteControl  SelectedItem="{Binding PersonSelected, Mode=TwoWay}" SearchBoxBackgroundColor="LightGray"  PlaceHolderColor="LightGray" 
-                                          TextColor="Red" DisplayMember="FullName"
+        <autoControl:AutoCompleteControl  SelectedItem="{Binding PersonSelected, Mode=TwoWay}" 
+                                          BackgroundColor="LawnGreen"                                          
+                                          SearchBoxBackgroundColor="LightGray"
+                                          SearchBoxTextColor="Aquamarine"
+                                          IsListOnTop="True" 
+                                          SearchBoxPlaceholder="search here!!!"
+                                          PlaceHolderColor="BlueViolet"
+                                          SuggestionListBackgroundColor="Yellow"                                           
+                                          TextColor="Red" 
+                                          DisplayMember="FullName"
                                           ListSource="{Binding ListPerson, Mode=TwoWay}"   >
             
         </autoControl:AutoCompleteControl>
