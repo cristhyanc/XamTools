@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:XamTools.StarRating"
+             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             x:Class="XamTools.StarRating.StarView">
+    <ContentView.Content>
+        <Grid x:Name="grdImages" >
+            <Grid.Behaviors>
+                <local:StarBehavior x:Name="starBehavior" ItemBehaviorSelectedEvent="starBehavior_ItemBehaviorSelectedEvent"   GroupName="myStar"/>
+            </Grid.Behaviors>
+
+            <ffimageloadingsvg:SvgCachedImage   WidthRequest="25" HeightRequest="25"
+                                                  Source="resource://systar.isystain.mobile.Resources.ic_StarRating_outline.svg?assembly=systar.isystain.mobile" >
+            </ffimageloadingsvg:SvgCachedImage>
+
+            <!--<ffimageloadingsvg:SvgCachedImage x:Name="imgStarred" WidthRequest="25" HeightRequest="25"                                                 
+                                                  Source="resource://systar.isystain.mobile.Resources.ic_StarRating_selected.svg?assembly=systar.isystain.mobile" >
+            </ffimageloadingsvg:SvgCachedImage>-->
+
+            <ffimageloadingsvg:SvgCachedImage  WidthRequest="25" HeightRequest="25"
+                                                  IsVisible="{Binding Source={x:Reference starBehavior}, Path=IsStarred}"
+                                                  Source="resource://systar.isystain.mobile.Resources.ic_StarRating_selected.svg?assembly=systar.isystain.mobile" >
+            </ffimageloadingsvg:SvgCachedImage>
+        </Grid>
+    </ContentView.Content>
+</ContentView>
